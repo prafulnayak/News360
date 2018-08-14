@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +17,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 @SuppressLint("ValidFragment")
 public class NewsFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private ConstraintLayout constraintLayout;
     private ConstraintSet constraintSet1 = new ConstraintSet();
     private ConstraintSet constraintSet2 = new ConstraintSet();
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<News> newsList;
+
     public NewsFragment(Context mContext){
     this.mContext = mContext;
     }
@@ -29,18 +38,35 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_news_fragment, container, false);
-        constraintLayout = rootView.findViewById(R.id.csFragment);
-        constraintSet1.clone(constraintLayout);
-        constraintSet2.clone(rootView.getContext(),R.layout.news_details);
-        TextView textView = rootView.findViewById(R.id.textViewX);
-        textView.setOnClickListener(this);
+
+        newsList = new ArrayList<News>();
+        addDemoNewsDetails();
+        recyclerView = rootView.findViewById(R.id.recycler_view);
+        adapter = new RecyclerAdapter(newsList, getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
         return rootView;
+    }
+
+    private void addDemoNewsDetails() {
+        newsList.add(new News("123","news",
+                "ndtv","hello","120516","i am doing good","hhhhtyyo",
+                "nkjnsdv","false","4584954","praful"));
+        newsList.add(new News("123","news",
+                "ndtv","hello","120516","i am doing good","hhhhtyyo",
+                "nkjnsdv","false","4584954","praful"));
+        newsList.add(new News("123","news",
+                "ndtv","hello","120516","i am doing good","hhhhtyyo",
+                "nkjnsdv","false","4584954","praful"));
+
     }
 
     @Override
     public void onClick(View view) {
-        TransitionManager.beginDelayedTransition(constraintLayout);
-        constraintSet2.applyTo(constraintLayout);
+//        TransitionManager.beginDelayedTransition(constraintLayout);
+//        constraintSet2.applyTo(constraintLayout);
         Log.e("Hello","Hello");
     }
 }
