@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">News360</string>
+    <string name="top100">Top 100</string>
+    <string name="sports">Sports</string>
+    <string name="politics">Politics</string>
+    <string name="app_360">org.sairaa.a360degree.app_360</string>
+    <string name="sports_status_preference">org.sairaa.a360degree.sports</string>
+    <string name="politics_status_preference">org.sairaa.a360degree.politics</string>
+    <string name="noOfTabs_preference">org.sairaa.a360degree.no_of_tabs</string>
+</resources>
