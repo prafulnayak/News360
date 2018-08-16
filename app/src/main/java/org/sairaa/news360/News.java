@@ -1,10 +1,25 @@
 package org.sairaa.news360;
 
 public class News {
-    private String id, type, sectionId, sectionName, webPublicationDate, webTitle, webUrl, apiUrl, isHosted, pillarId, pillarName;
+    private String id,
+            type,
+            sectionId,
+            sectionName,
+            webPublicationDate,
+            webTitle,
+            webUrl,
+            apiUrl,
+            fieldThumbnail,
+            tagContributor,
+            isHosted,
+            pillarId,
+            pillarName;
+
 
     public News(String id, String type, String sectionId, String sectionName,
                 String webPublicationDate, String webTitle, String webUrl, String apiUrl,
+                String fieldThumbnail,
+                String tagContributor,
                 String isHosted, String pillarId, String pillarName){
 
         this.id = id;
@@ -15,6 +30,8 @@ public class News {
         this.webTitle = webTitle;
         this.webUrl = webUrl;
         this.apiUrl = apiUrl;
+        this.fieldThumbnail = fieldThumbnail;
+        this.tagContributor = tagContributor;
         this.isHosted = isHosted;
         this.pillarId = pillarId;
         this.pillarName = pillarName;
@@ -51,6 +68,14 @@ public class News {
 
     public String getApiUrl() {
         return apiUrl;
+    }
+
+    public String getFieldThumbnail() {
+        return fieldThumbnail;
+    }
+
+    public String getTagContributor() {
+        return tagContributor;
     }
 
     public String getIsHosted() {

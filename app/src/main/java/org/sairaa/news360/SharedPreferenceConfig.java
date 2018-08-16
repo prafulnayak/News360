@@ -29,41 +29,41 @@ public class SharedPreferenceConfig {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(context.getResources().getString(R.string.noOfTabs_preference), tab+sports+politics);
-        Log.i("SharedPreferanceWrite: ",""+tab+sports+politics);
+        Log.i("SharedWriteTab: ",""+tab+sports+politics);
         editor.commit();
     }
 
     public int readNoOfTabs(){
         int tabs = 1;
         tabs = sharedPreferences.getInt(context.getResources().getString(R.string.noOfTabs_preference),tabs);
-        Log.i("SharedPreferanceRead: ",""+tabs);
+        Log.i("SharedReadTab: ",""+tabs);
         return tabs;
     }
 
     public void writeSportsStatus(boolean status){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(context.getResources().getString(R.string.sports_status_preference), status);
-        Log.i("SharedPreferanceWrite: ",""+status);
+        Log.i("SharedeWriteSports: ",""+status);
         editor.commit();
     }
 
     public boolean readSportsStatus(){
         boolean status = false;
         status = sharedPreferences.getBoolean(context.getResources().getString(R.string.sports_status_preference),false);
-        Log.i("SharedPreferanceRead: ",""+status);
+        Log.i("SharedReadSports: ",""+status);
         return status;
     }
     public void writePoliticsStatus(boolean status){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(context.getResources().getString(R.string.politics_status_preference), status);
-        Log.i("SharedPreferanceWrite: ",""+status);
+        Log.i("SharedWritePolitics ",""+status);
         editor.commit();
     }
 
     public boolean readPoliticsStatus(){
         boolean status = false;
         status = sharedPreferences.getBoolean(context.getResources().getString(R.string.politics_status_preference),false);
-        Log.i("SharedPreferanceRead: ",""+status);
+        Log.i("SharedreadPolitics: ",""+status);
         return status;
     }
 }
