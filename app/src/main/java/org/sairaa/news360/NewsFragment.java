@@ -29,9 +29,6 @@ import java.util.List;
 public class NewsFragment extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<List<News>> {
     public static final String LOG_NEWS_FRAGMENT = NewsFragment.class.getName();
     private Context mContext;
-    private ConstraintLayout constraintLayout;
-    private ConstraintSet constraintSet1 = new ConstraintSet();
-    private ConstraintSet constraintSet2 = new ConstraintSet();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -44,14 +41,13 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
     private static final int NEWS_LOADER_SPORTS = 22;
     private static final int NEWS_LOADER_POLITICS = 33;
     private int typeFragment;
+    private String fragmentS;
     private Uri.Builder uriBuilder;
     private SharedPreferenceConfig sharedPreferenceConfig;
 
     public NewsFragment(Context mContext, int fragmentPosition){
     this.mContext = mContext;
     this.typeFragment = fragmentPosition;
-    Log.i(LOG_NEWS_FRAGMENT,"add New fragment"+fragmentPosition);
-
     }
 
     @Nullable
@@ -61,106 +57,32 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         newsList = new ArrayList<News>();
 
-
-
         if(typeFragment == Constant.top100){
-            Log.i(LOG_NEWS_FRAGMENT,"Top100 "+typeFragment);
-
             getLoaderManager().initLoader(NEWS_LOADER_TOP100,null,NewsFragment.this).forceLoad();
             typeFragment = 222;
         }
         if(typeFragment == Constant.sports){
-            Log.i(LOG_NEWS_FRAGMENT,"Sports "+typeFragment + "  sports");
-
             getLoaderManager().initLoader(NEWS_LOADER_SPORTS,null,NewsFragment.this).forceLoad();
             typeFragment = 222;
         }
         if(typeFragment == Constant.politics){
-            Log.i(LOG_NEWS_FRAGMENT,"Politics "+typeFragment+" politics");
             getLoaderManager().initLoader(NEWS_LOADER_POLITICS,null,NewsFragment.this).forceLoad();
             typeFragment = 222;
         }
-        addDemoNewsDetails();
+//        addDemoNewsDetails();
         recyclerView = rootView.findViewById(R.id.recycler_view);
         return rootView;
     }
 
-    private void addDemoNewsDetails() {
-        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
-
-        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-        uriBuilder = baseUri.buildUpon();
-
-
-
-
-//        uriBuilder.appendQueryParameter("show-fields", "thumbnail");
-//        uriBuilder.appendQueryParameter("show-tags", "contributor");
-//        uriBuilder.appendQueryParameter("page-size", "100");
-//        uriBuilder.appendQueryParameter("q", "sports");
-//        getLoaderManager().initLoader(NEWS_LOADER_ID,null,NewsFragment.this).forceLoad();
-//        switch (fragmentPosition){
-//            case 0:
-//                Log.i(LOG_NEWS_FRAGMENT,"fragment : case 0 : Top100"+fragmentPosition);
-//                getLoaderManager().initLoader(NEWS_LOADER_ID,null,NewsFragment.this).forceLoad();
-//                break;
-//            case 1:
-////                if(sharedPreferenceConfig.readSportsStatus()){
-//                    Log.i(LOG_NEWS_FRAGMENT,"fragment : Case 1 : sports"+fragmentPosition);
-//                    uriBuilder.appendQueryParameter("show-fields", "thumbnail");
-//                    uriBuilder.appendQueryParameter("show-tags", "contributor");
-//                    uriBuilder.appendQueryParameter("page-size", "100");
-//                    uriBuilder.appendQueryParameter("q", "sports");
-//                    Log.i(LOG_NEWS_FRAGMENT,uriBuilder.toString());
-//                    getLoaderManager().initLoader(2,null,NewsFragment.this).forceLoad();
-//                    break;
-////                }
-//
-////                if(sharedPreferenceConfig.readPoliticsStatus()){
-////                    Log.i(LOG_NEWS_FRAGMENT,"fragment : Case 1 : politics"+fragmentPosition);
-////                    uriBuilder.appendQueryParameter("show-fields", "thumbnail");
-////                    uriBuilder.appendQueryParameter("show-tags", "contributor");
-////                    uriBuilder.appendQueryParameter("page-size", "100");
-////                    uriBuilder.appendQueryParameter("q", "politics");
-////                    getLoaderManager().initLoader(3,null,NewsFragment.this).forceLoad();
-////                    break;
-////                }
-//
-//
-//            case 2:
-//                Log.i(LOG_NEWS_FRAGMENT,"fragment : Case 2 : politics"+fragmentPosition);
-//                uriBuilder.appendQueryParameter("show-fields", "thumbnail");
-//                uriBuilder.appendQueryParameter("show-tags", "contributor");
-//                uriBuilder.appendQueryParameter("page-size", "100");
-//                uriBuilder.appendQueryParameter("q", "politics");
-//                getLoaderManager().initLoader(3,null,NewsFragment.this).forceLoad();
-//                break;
-//
-//            default:
-//        }
-//        newsList.add(new News("123","news",
-//                "ndtv","hello","120516","i am doing good","hhhhtyyo",
-//                "nkjnsdv","false","4584954","praful"));
-//        newsList.add(new News("123","news",
-//                "ndtv","hello","120516","i am doing good","hhhhtyyo",
-//                "nkjnsdv","false","4584954","praful"));
-//        newsList.add(new News("123","news",
-//                "ndtv","hello","120516","i am doing good","hhhhtyyo",
-//                "nkjnsdv","false","4584954","praful"));
-//        getLoaderManager().initLoader(NEWS_LOADER_ID,null,NewsFragment.this).forceLoad();
-    }
-
     @Override
     public void onClick(View view) {
-//        TransitionManager.beginDelayedTransition(constraintLayout);
-//        constraintSet2.applyTo(constraintLayout);
         Log.e(LOG_NEWS_FRAGMENT,"Hello");
     }
 
     @NonNull
     @Override
     public Loader<List<News>> onCreateLoader(int id, @Nullable Bundle args) {
-        Log.i(LOG_NEWS_FRAGMENT,"onCreateLoader");
+//        Log.i(LOG_NEWS_FRAGMENT,"onCreateLoader");
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it

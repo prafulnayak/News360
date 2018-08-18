@@ -36,6 +36,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewH
         holder.headingT.setText(news.getWebTitle());
         holder.dateT.setText(news.getWebPublicationDate());
         holder.sourceT.setText(news.getPillarName());
+        holder.imageViewN.setImageBitmap(news.getFieldThumbnail());
 
     }
 

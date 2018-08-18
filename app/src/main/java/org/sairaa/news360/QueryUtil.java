@@ -1,5 +1,7 @@
 package org.sairaa.news360;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -18,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +78,19 @@ class QueryUtil {
                 String webUrl = currentNews.getString("webUrl");
                 String apiUrl = currentNews.getString("apiUrl");
 
-                String thumbnail;
+                String thumbnailUrl;
                 try {
                     JSONObject fields = currentNews.getJSONObject("fields");
-                    thumbnail = fields.getString("thumbnail");
+                    thumbnailUrl = fields.getString("thumbnail");
                 } catch (JSONException e) {
-                    Log.e("QueryUtils", "Problem parsing the news JSON results", e);
+                    Log.e(LOG_TAG_QUERY_UTIL, "Problem parsing the news JSON results", e);
+                    thumbnailUrl = null;
+                }
+                Bitmap thumbnail = null;
+                try {
+                    thumbnail = getBitmapFromUrl(thumbnailUrl);
+                } catch (IOException e) {
+                    e.printStackTrace();
                     thumbnail = null;
                 }
                 String publisher = "";
@@ -113,6 +123,17 @@ class QueryUtil {
         }
 
         return newsData;
+    }
+
+    private Bitmap getBitmapFromUrl(String thumbnailUrl) throws IOException {
+        Log.i(LOG_TAG_QUERY_UTIL,"Test : getBitmapUri( ) is called");
+        URLConnection connection = null;
+        try {
+            connection = new URL(thumbnailUrl).openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeStream((InputStream)connection.getContent(), null, null);
     }
 
     private String makeHttpRequest(URL url) throws IOException {

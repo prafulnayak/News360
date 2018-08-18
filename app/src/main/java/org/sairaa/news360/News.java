@@ -1,5 +1,7 @@
 package org.sairaa.news360;
 
+import android.graphics.Bitmap;
+
 public class News {
     private String id,
             type,
@@ -9,16 +11,16 @@ public class News {
             webTitle,
             webUrl,
             apiUrl,
-            fieldThumbnail,
             tagContributor,
             isHosted,
             pillarId,
             pillarName;
+    private Bitmap fieldThumbnail;
 
 
     public News(String id, String type, String sectionId, String sectionName,
                 String webPublicationDate, String webTitle, String webUrl, String apiUrl,
-                String fieldThumbnail,
+                Bitmap fieldThumbnail,
                 String tagContributor,
                 String isHosted, String pillarId, String pillarName){
 
@@ -70,7 +72,7 @@ public class News {
         return apiUrl;
     }
 
-    public String getFieldThumbnail() {
+    public Bitmap getFieldThumbnail() {
         return fieldThumbnail;
     }
 
