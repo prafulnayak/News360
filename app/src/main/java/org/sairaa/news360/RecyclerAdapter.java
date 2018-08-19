@@ -37,7 +37,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewH
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
         final News news = newsListR.get(position);
-        holder.sectionT.setText(news.getSectionName());
+        holder.sectionT.setText(news.getSectionName()+"  >>");
         holder.headingT.setText(news.getWebTitle());
         holder.dateT.setText(convertStringToDate(news.getWebPublicationDate()));
         holder.sourceT.setText(news.getTagContributor());

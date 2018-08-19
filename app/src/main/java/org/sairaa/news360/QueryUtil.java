@@ -102,7 +102,7 @@ class QueryUtil {
                 for(int j = 0; j<tags.length() ; j++){
                     JSONObject tagObject = tags.getJSONObject(j);
 
-                    publisher = publisher+" / "+tagObject.getString(ctx.getString(R.string.webTitle));
+                    publisher = tagObject.getString(ctx.getString(R.string.webTitle));
                 }
                 String isHosted = currentNews.getString(ctx.getString(R.string.isHosted));
 //                String pillarId = currentNews.getString("pillarId");
