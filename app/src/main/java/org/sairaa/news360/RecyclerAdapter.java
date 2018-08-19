@@ -9,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
     private Context ctx;
@@ -34,12 +39,17 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewH
         final News news = newsListR.get(position);
         holder.sectionT.setText(news.getSectionName());
         holder.headingT.setText(news.getWebTitle());
-        holder.dateT.setText(news.getWebPublicationDate());
-        holder.sourceT.setText(news.getPillarName());
-        holder.imageViewN.setImageBitmap(news.getFieldThumbnail());
-
+        holder.dateT.setText(convertStringToDate(news.getWebPublicationDate()));
+        holder.sourceT.setText(news.getTagContributor());
+        if(news.getFieldThumbnail() != null)
+            holder.imageViewN.setImageBitmap(news.getFieldThumbnail());
+        else
+            holder.imageViewN.setBackgroundResource(R.drawable.ic_launcher_background);
     }
 
+    private String convertStringToDate(String dateString) {
+        return dateString.substring(0,10);
+    }
 
 
     @Override

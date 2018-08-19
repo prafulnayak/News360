@@ -1,5 +1,6 @@
 package org.sairaa.news360;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -28,7 +29,9 @@ import java.util.List;
 class QueryUtil {
     private static final String LOG_TAG_QUERY_UTIL = QueryUtil.class.getName();
     private  List<News> newsList1 = new ArrayList<News>();
-    public  List<News> QueryUtilsForNewtwork(String mUrl) {
+    private Context ctx;
+    public  List<News> QueryUtilsForNewtwork(String mUrl, Context ctx) {
+        this.ctx = ctx;
         URL url;
         url = CreateUrl(mUrl);
         String jsonResponse = null;
@@ -54,8 +57,8 @@ class QueryUtil {
 
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or earthquakes).
-            JSONObject newsObject = baseJsonResponse.getJSONObject("response");
-            JSONArray newsArray = newsObject.getJSONArray("results");
+            JSONObject newsObject = baseJsonResponse.getJSONObject(ctx.getString(R.string.response));
+            JSONArray newsArray = newsObject.getJSONArray(ctx.getString(R.string.results));
 
             // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
             for (int i = 0; i < newsArray.length(); i++) {
@@ -69,42 +72,43 @@ class QueryUtil {
 //                JSONObject results = currentNews.getJSONObject("");
 
                 // Extract the value for the key called "mag"
-                String id = currentNews.getString("id");
-                String type = currentNews.getString("type");
-                String sectionId = currentNews.getString("sectionId");
-                String sectionName = currentNews.getString("sectionName");
-                String webPublicationDate = currentNews.getString("webPublicationDate");
-                String webTitle = currentNews.getString("webTitle");
-                String webUrl = currentNews.getString("webUrl");
-                String apiUrl = currentNews.getString("apiUrl");
+                String id = currentNews.getString(ctx.getString(R.string.id));
+                String type = currentNews.getString(ctx.getString(R.string.type));
+                String sectionId = currentNews.getString(ctx.getString(R.string.sectionId));
+                String sectionName = currentNews.getString(ctx.getString(R.string.sectionName));
+                String webPublicationDate = currentNews.getString(ctx.getString(R.string.webPublicationDate));
+                String webTitle = currentNews.getString(ctx.getString(R.string.webTitle));
+                String webUrl = currentNews.getString(ctx.getString(R.string.webUrl));
+                String apiUrl = currentNews.getString(ctx.getString(R.string.apiUrl));
 
                 String thumbnailUrl;
                 try {
-                    JSONObject fields = currentNews.getJSONObject("fields");
-                    thumbnailUrl = fields.getString("thumbnail");
+                    JSONObject fields = currentNews.getJSONObject(ctx.getString(R.string.fields));
+                    thumbnailUrl = fields.getString(ctx.getString(R.string.thumbnail));
                 } catch (JSONException e) {
                     Log.e(LOG_TAG_QUERY_UTIL, "Problem parsing the news JSON results", e);
                     thumbnailUrl = null;
                 }
                 Bitmap thumbnail = null;
                 try {
-                    thumbnail = getBitmapFromUrl(thumbnailUrl);
+                    if(thumbnailUrl != null)
+                        thumbnail = getBitmapFromUrl(thumbnailUrl);
                 } catch (IOException e) {
                     e.printStackTrace();
                     thumbnail = null;
                 }
                 String publisher = "";
-                JSONArray tags = currentNews.getJSONArray("tags");
+                JSONArray tags = currentNews.getJSONArray(ctx.getString(R.string.tags));
                 for(int j = 0; j<tags.length() ; j++){
                     JSONObject tagObject = tags.getJSONObject(j);
 
-                    publisher = publisher+" / "+tagObject.getString("webTitle");
+                    publisher = publisher+" / "+tagObject.getString(ctx.getString(R.string.webTitle));
                 }
-                String isHosted = currentNews.getString("isHosted");
+                String isHosted = currentNews.getString(ctx.getString(R.string.isHosted));
 //                String pillarId = currentNews.getString("pillarId");
 //                String pillarName = currentNews.getString("pillarName");
                 newsData.add(new News(id,type,sectionId,sectionName,webPublicationDate,webTitle,webUrl,apiUrl,thumbnail,
-                        publisher,isHosted,"12345", "ssssss"));
+                        publisher,isHosted));
                 // Extract the value for the key called "place"
 //                String location = properties.getString("place");
 //

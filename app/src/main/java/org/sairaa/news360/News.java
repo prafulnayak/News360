@@ -12,9 +12,7 @@ public class News {
             webUrl,
             apiUrl,
             tagContributor,
-            isHosted,
-            pillarId,
-            pillarName;
+            isHosted;
     private Bitmap fieldThumbnail;
 
 
@@ -22,7 +20,7 @@ public class News {
                 String webPublicationDate, String webTitle, String webUrl, String apiUrl,
                 Bitmap fieldThumbnail,
                 String tagContributor,
-                String isHosted, String pillarId, String pillarName){
+                String isHosted){
 
         this.id = id;
         this.type = type;
@@ -35,8 +33,7 @@ public class News {
         this.fieldThumbnail = fieldThumbnail;
         this.tagContributor = tagContributor;
         this.isHosted = isHosted;
-        this.pillarId = pillarId;
-        this.pillarName = pillarName;
+
 
     }
 
@@ -82,14 +79,6 @@ public class News {
 
     public String getIsHosted() {
         return isHosted;
-    }
-
-    public String getPillarId() {
-        return pillarId;
-    }
-
-    public String getPillarName() {
-        return pillarName;
     }
 
 }

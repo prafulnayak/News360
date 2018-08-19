@@ -43,6 +43,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
     private int typeFragment;
     private String fragmentS;
     private Uri.Builder uriBuilder;
+    private CheckConnection checkConnection;
+    private DialogAction dialogAction;
     private SharedPreferenceConfig sharedPreferenceConfig;
 
     public NewsFragment(Context mContext, int fragmentPosition){
@@ -56,27 +58,27 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
         View rootView = inflater.inflate(R.layout.activity_news_fragment, container, false);
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         newsList = new ArrayList<News>();
-
-        if(typeFragment == Constant.top100){
-            getLoaderManager().initLoader(NEWS_LOADER_TOP100,null,NewsFragment.this).forceLoad();
-            typeFragment = 222;
+        checkConnection = new CheckConnection(getActivity());
+        dialogAction = new DialogAction(getActivity());
+        if(checkConnection.isConnected()){
+            dialogAction.showDialog(getString(R.string.app_name),getString(R.string.fatch));
+            if(typeFragment == Constant.top100){
+                getLoaderManager().initLoader(NEWS_LOADER_TOP100,null,NewsFragment.this).forceLoad();
+            }
+            if(typeFragment == Constant.sports){
+                getLoaderManager().initLoader(NEWS_LOADER_SPORTS,null,NewsFragment.this).forceLoad();
+            }
+            if(typeFragment == Constant.politics){
+                getLoaderManager().initLoader(NEWS_LOADER_POLITICS,null,NewsFragment.this).forceLoad();
+            }
         }
-        if(typeFragment == Constant.sports){
-            getLoaderManager().initLoader(NEWS_LOADER_SPORTS,null,NewsFragment.this).forceLoad();
-            typeFragment = 222;
-        }
-        if(typeFragment == Constant.politics){
-            getLoaderManager().initLoader(NEWS_LOADER_POLITICS,null,NewsFragment.this).forceLoad();
-            typeFragment = 222;
-        }
-//        addDemoNewsDetails();
         recyclerView = rootView.findViewById(R.id.recycler_view);
         return rootView;
     }
 
     @Override
     public void onClick(View view) {
-        Log.e(LOG_NEWS_FRAGMENT,"Hello");
+
     }
 
     @NonNull
@@ -116,6 +118,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<News>> loader, List<News> data) {
+        dialogAction.hideDialog();
         Log.i(LOG_NEWS_FRAGMENT,"onLoadFinished");
         newsList.clear();
         newsList.addAll(data);
