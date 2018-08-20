@@ -46,7 +46,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
     private CheckConnection checkConnection;
     private DialogAction dialogAction;
     private SharedPreferenceConfig sharedPreferenceConfig;
-
+    private TextView emptyTextViewT;
     public NewsFragment(Context mContext, int fragmentPosition){
     this.mContext = mContext;
     this.typeFragment = fragmentPosition;
@@ -57,6 +57,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_news_fragment, container, false);
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
+
         newsList = new ArrayList<News>();
         checkConnection = new CheckConnection(getActivity());
         dialogAction = new DialogAction(getActivity());
@@ -120,9 +121,19 @@ public class NewsFragment extends Fragment implements View.OnClickListener, Load
     public void onLoadFinished(@NonNull Loader<List<News>> loader, List<News> data) {
         dialogAction.hideDialog();
         Log.i(LOG_NEWS_FRAGMENT,"onLoadFinished");
+//        emptyTextViewT.setText("Sorry try after some time");
+        emptyTextViewT = getActivity().findViewById(R.id.emptyTextView);
         newsList.clear();
-        newsList.addAll(data);
-        adapter = new RecyclerAdapter(newsList, getActivity());
+        if(data!=null && !data.isEmpty()){
+            newsList.addAll(data);
+            adapter = new RecyclerAdapter(newsList, getActivity());
+            emptyTextViewT.setVisibility(View.INVISIBLE);
+        }else {
+            emptyTextViewT.setVisibility(View.VISIBLE);
+            emptyTextViewT.setText(getString(R.string.nullData));
+        }
+
+
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

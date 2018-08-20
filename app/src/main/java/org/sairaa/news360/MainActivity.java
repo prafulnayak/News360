@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     private SharedPreferenceConfig sharedPreferenceConfig;
     private CheckConnection checkConnection;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package org.sairaa.news360;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewH
             holder.imageViewN.setImageBitmap(news.getFieldThumbnail());
         else
             holder.imageViewN.setBackgroundResource(R.drawable.ic_launcher_background);
+
+        holder.imageViewN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ctx,NewsDetails.class);
+                intent.putExtra("urlWeb",news.getWebUrl());
+//                intent.putExtra("bmp",news.getFieldThumbnail());
+                ctx.startActivity(intent);
+            }
+        });
     }
 
     private String convertStringToDate(String dateString) {
